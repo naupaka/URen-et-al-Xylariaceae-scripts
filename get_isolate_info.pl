@@ -28,7 +28,7 @@ open(my $fh => $infile) || die $!;
 my @ids;
 while(<$fh>) {
   my ($id) = split;
-  push @ids, $acc;
+  push @ids, $id;
 }
 
 my $out = Bio::SeqIO->new(-format => 'genbank');
