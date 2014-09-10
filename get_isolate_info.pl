@@ -21,25 +21,14 @@ GetOptions(
 my $infile = shift || 'test.fa'; # provide filename on cmdline
 
 open(my $fh => $infile) || die $!;
-# in Jana's example the input file is a FASTA file of the 
-# sequences where the name we want to investigate is the 
-# accession number encoded in the ID like
-# >DQ068350_fungal_sp_VI7
-# we can just use regular perl parsing
-
-# if you want to change this where you just provide a simple file of
-# IDs (either accession numbers, GI numbers, or some other ID
-# that will also work, but will need to change this next loop
+# Input will be just
+# AY315388
+# AY561198
 
 my @ids;
 while(<$fh>) {
-    if( /^>(\S+)/) {
-	my $id = $1;
-	# accession is the first value of this string
-	# in Jana's example
-	my ($acc) = split(/_/,$id);
-	push @ids, $acc;
-    } 
+  my ($id) = split;
+  push @ids, $acc;
 }
 
 my $out = Bio::SeqIO->new(-format => 'genbank');
