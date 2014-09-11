@@ -48,6 +48,12 @@ for my $id (@ids ) {
 			       -file => $cache_file)->next_seq;
     }
     print $id, "\n";
+    my $ann = $seq->annotation();
+    foreach my $ref ( $ann->get_Annotations('reference') ) {
+	next if $ref->title =~ /Direct Submission/i;
+	print " REF TITLE: ",$ref->title,"\n";
+    }
+    print " Features:\n";
     for my $feature ( $seq->get_SeqFeatures() ) {	
 	if( $feature->primary_tag eq 'source' ) {
 	    for my $tag ( $feature->get_all_tags ) {
