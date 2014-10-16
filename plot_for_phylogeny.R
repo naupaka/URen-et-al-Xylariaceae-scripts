@@ -29,12 +29,13 @@ pdf("Plot.pdf", width=15, height=50)
 split.screen(c(1,2))
 
 screen(1)
-par(fin = c(6, 45),
-    fig = c(0.2,0.8,0.0127,0.919))
+par(fig = c(0.2,0.8,0.0127,0.919),
+    mar = c(0,0,0,0))
 plot(tree.phylog, cleaves=0, clabel.leaves=0.5)
 # par(new=TRUE)
 screen(2)
-
+par(fig = c(0.5,1.4,0.0127,0.919),
+    mar = c(0,0,0,0))
 # set up empty plot and add column labels to top
 plot(0,0, 
     xlim = c(-5, number.columns - 4), 
@@ -43,9 +44,9 @@ plot(0,0,
     xaxt = "n", yaxt = "n", 
     bty = "n", 
     ylab = "", xlab = "")
-text(x = c(0,1,2,3), y = rep(2 * (number.rows) + 1, 2), 
+text(x = c(-1,1,3,4), y = rep(2 * (number.rows) + 1, 2), 
     labels = names(data.in[,c(2,3,4,5)]), srt = 90, adj = 0, cex = 0.5)
-text(x = arnold.columns/2 + 1, 
+text(x = arnold.columns/2 + 2, 
     y = rep(2 * (number.rows) + 1, 
     length(arnold.columns)), labels = names(data.in[,arnold.columns + 1]), 
     srt = 90, adj = 0, cex = 0.5)
@@ -53,30 +54,30 @@ text(x = arnold.columns/2 + 1,
 for(row in 1:number.rows){
     
     # print OTU (isolate) row labels
-    text(x = -1, y = 2 * (number.rows - row), 
-         labels = data.in$Isolate.Rep[row], cex = 0.5, pos=2)
+    #text(x = -2, y = 2 * (number.rows - row), 
+    #     labels = data.in$Isolate.Rep[row], cex = 0.5, pos=2)
    
     # print out counts of sequences in each OTU (row)
-    text(x = 0, y = 2 * (number.rows - row), 
+    text(x = -1, y = 2 * (number.rows - row), 
          labels = data.in$X95.OTU[row], cex = 0.5)
     text(x = 1, y = 2 * (number.rows - row), 
          labels = data.in$X99.OTU[row], cex = 0.5)
-    text(x = 2, y = 2 * (number.rows - row), 
-         labels = data.in$Total.Arnold.isolates[row], cex = 0.5)
     text(x = 3, y = 2 * (number.rows - row), 
+         labels = data.in$Total.Arnold.isolates[row], cex = 0.5)
+    text(x = 4, y = 2 * (number.rows - row), 
          labels = data.in$Total.Blast.Hits[row], cex = 0.5)
     # plot either fully filled circles if only Arnold collection
     # or GenBank has isolates, and half-circles if both are present
     for(column in arnold.columns){
         if(data.in[row, column] > 0 & data.in[row, column + 1] > 0){
             if(DEBUG) print(c(row, column, "black and red"))
-            floating.pie(xpos = column/2 + 1, ypos = 2 * (number.rows - row), 
+            floating.pie(xpos = column/2 + 2, ypos = 2 * (number.rows - row), 
                          x = c(1,1), startpos = pi/2, 
-                         col = c("black", "red"), radius = 0.35)
+                         col = c("black", "red"), radius = 0.37)
         }
         else if(data.in[row, column] > 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "only black"))
-            points(x = column/2 + 1, y = 2 * (number.rows - row), 
+            points(x = column/2 + 2, y = 2 * (number.rows - row), 
                    pch = 21, cex = 1.4, bg = "black")
             
             # floating.pie(xpos = column - 3, ypos = 2 * (number.rows - row), 
@@ -85,7 +86,7 @@ for(row in 1:number.rows){
         }
         else if(data.in[row, column] == 0 & data.in[row, column + 1] > 0){
             if(DEBUG) print(c(row, column, "only red"))
-            points(x = column/2 + 1, y = 2 * (number.rows - row), 
+            points(x = column/2 + 2, y = 2 * (number.rows - row), 
                    pch = 21, cex = 1.4, bg = "red")
             
             # floating.pie(xpos = column - 3, ypos = 2 * (number.rows - row), 
@@ -95,7 +96,7 @@ for(row in 1:number.rows){
         else if(data.in[row, column] == 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "white"))
             # add empty white circles when no isolates for either
-            # points(x = column/2 + 1, y = 2 * (number.rows - row), 
+            # points(x = column/2 + 2, y = 2 * (number.rows - row), 
             # pch = 1, cex = 1.4) 
             
             # floating.pie(xpos = column - 3, ypos = 2 * (number.rows - row), 
