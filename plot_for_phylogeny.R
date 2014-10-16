@@ -15,7 +15,6 @@ tree.phylog <- newick2phylog(my.newick)
 
 # Reorder rows to match tree leaves
 data.in <- data.in[match(names(tree.phylog$leaves), data.in$Isolate.Rep),]
-# data.in <- data.in[match(names(tree.in$leaves), data.in$Isolate.Rep),]
 
 # set up variables for later reuse and to facilitate code readibility
 number.rows <- nrow(data.in)
@@ -25,12 +24,6 @@ arnold.columns = seq(from = 6, to = number.columns, by = 2)
 pdf("Plot.pdf", width=15, height=50)
 
 split.screen(c(1,2))
-
-screen(1)
-par(fig = c(0.2,0.85,0.0127,0.919),
-    mar = c(0,0,0,0))
-
-plot(tree.phylog, cleaves=0.5, clabel.leaves=0.5)
 
 screen(2)
 par(fig = c(0,1.1,0.0127,0.919),
@@ -44,24 +37,34 @@ plot(0,0,
     xaxt = "n", yaxt = "n", 
     bty = "n", 
     ylab = "", xlab = "")
-text(x = c(-1,1,3,4), y = rep(2 * (number.rows) + 1, 2), 
-    labels = names(data.in[,c(2,3,4,5)]), srt = 90, adj = 0, cex = 0.5)
+text(x = c(3,4), y = rep(2 * (number.rows) + 1, 2), 
+    labels = names(data.in[,c(4,5)]), srt = 90, adj = 0, cex = 0.5)
 text(x = arnold.columns/2 + 2, 
     y = rep(2 * (number.rows) + 1, 
     length(arnold.columns)), labels = names(data.in[,arnold.columns + 1]), 
     srt = 90, adj = 0, cex = 0.5)
 
+stored.tip.labels <- c("")
+
 for(row in 1:number.rows){
     
+    stored.tip.labels[row] <- 
+        paste(data.in$Isolate.Rep[row], 
+          data.in$X95.OTU[row], 
+          data.in$X99.OTU[row], sep = " - ")
+    
     # print OTU (isolate) row labels
-    # text(x = -2, y = 2 * (number.rows - row), 
-    #     labels = data.in$Isolate.Rep[row], cex = 0.5, pos=2)
+#     text(x = 1, y = 2 * (number.rows - row), 
+#         labels = paste(data.in$Isolate.Rep[row], 
+#                        data.in$X95.OTU[row], 
+#                        data.in$X99.OTU[row], sep = " • "), 
+#                 cex = 0.5, pos=2)
    
     # print out counts of sequences in each OTU (row)
-    text(x = -1, y = 2 * (number.rows - row), 
-         labels = data.in$X95.OTU[row], cex = 0.5)
-    text(x = 1, y = 2 * (number.rows - row), 
-         labels = data.in$X99.OTU[row], cex = 0.5)
+#     text(x = -1, y = 2 * (number.rows - row), 
+#          labels = data.in$X95.OTU[row], cex = 0.5)
+#     text(x = 1, y = 2 * (number.rows - row), 
+#          labels = data.in$X99.OTU[row], cex = 0.5)
     text(x = 3, y = 2 * (number.rows - row), 
          labels = data.in$Total.Arnold.isolates[row], cex = 0.5)
     text(x = 4, y = 2 * (number.rows - row), 
@@ -105,6 +108,12 @@ for(row in 1:number.rows){
         }
     }
 }
+
+screen(1)
+par(fig = c(0.2,0.85,0.0127,0.919),
+    mar = c(0,0,0,0))
+
+plot(tree.phylog, cleaves=0.3, clabel.leaves=0.5, labels.leaves = c(stored.tip.labels, ""))
 
 close.screen(all = TRUE)
 dev.off()
