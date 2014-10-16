@@ -10,6 +10,7 @@ DEBUG <- FALSE
 setwd("~/Dropbox/Working_files/_Desktop/Kekoanui/KekoanuiDesktop/Jana_phylogeny/")
 data.in <- read.csv("METADATA_forTree_new.csv")
 tree.in <- read.tree("RAxML_bestTree.result.phy")
+tree.in <- ladderize(tree.in, right = TRUE)
 my.newick <- write.tree(tree.in)
 tree.phylog <- newick2phylog(my.newick)
 
@@ -19,8 +20,9 @@ data.in <- data.in[match(names(tree.phylog$leaves), data.in$Isolate.Rep),]
 # set up variables for later reuse and to facilitate code readibility
 number.rows <- nrow(data.in)
 number.columns <- ncol(data.in)
-arnold.columns = seq(from = 6, to = number.columns, by = 2)
+arnold.columns = seq(from = 7, to = number.columns, by = 2)
 
+offset.value <- 6
 pdf("Plot.pdf", width=15, height=50)
 
 split.screen(c(1,2))
@@ -37,21 +39,26 @@ plot(0,0,
     xaxt = "n", yaxt = "n", 
     bty = "n", 
     ylab = "", xlab = "")
-text(x = c(3,4), y = rep(2 * (number.rows) + 1, 2), 
-    labels = names(data.in[,c(4,5)]), srt = 90, adj = 0, cex = 0.5)
-text(x = arnold.columns/2 + 2, 
+text(x = c(3,4) + (offset.value - 2), y = rep(2 * (number.rows) + 1, 2), 
+    labels = names(data.in[,c(5,6)]), srt = 90, adj = 0, cex = 0.5)
+text(x = arnold.columns/2 + offset.value, 
     y = rep(2 * (number.rows) + 1, 
     length(arnold.columns)), labels = names(data.in[,arnold.columns + 1]), 
     srt = 90, adj = 0, cex = 0.5)
 
-stored.tip.labels <- c("")
+stored.tip.labels <- NA
 
 for(row in 1:number.rows){
     
     stored.tip.labels[row] <- 
-        paste(data.in$Isolate.Rep[row], 
-          data.in$X95.OTU[row], 
-          data.in$X99.OTU[row], sep = " - ")
+        if( is.na(data.in$X95.OTU[row]) ){
+            paste(data.in$Isolate.Name[row])
+        }
+        else{
+            paste(data.in$Isolate.Name[row], 
+                data.in$X95.OTU[row], 
+                data.in$X99.OTU[row], sep = " - ")
+        }
     
     # print OTU (isolate) row labels
 #     text(x = 1, y = 2 * (number.rows - row), 
@@ -60,51 +67,35 @@ for(row in 1:number.rows){
 #                        data.in$X99.OTU[row], sep = " • "), 
 #                 cex = 0.5, pos=2)
    
-    # print out counts of sequences in each OTU (row)
-#     text(x = -1, y = 2 * (number.rows - row), 
-#          labels = data.in$X95.OTU[row], cex = 0.5)
-#     text(x = 1, y = 2 * (number.rows - row), 
-#          labels = data.in$X99.OTU[row], cex = 0.5)
-    text(x = 3, y = 2 * (number.rows - row), 
+    text(x = 3 + (offset.value - 2), y = 2 * (number.rows - row), 
          labels = data.in$Total.Arnold.isolates[row], cex = 0.5)
-    text(x = 4, y = 2 * (number.rows - row), 
+    text(x = 4 + (offset.value - 2), y = 2 * (number.rows - row), 
          labels = data.in$Total.Blast.Hits[row], cex = 0.5)
+
     # plot either fully filled circles if only Arnold collection
     # or GenBank has isolates, and half-circles if both are present
     for(column in arnold.columns){
         if(data.in[row, column] > 0 & data.in[row, column + 1] > 0){
             if(DEBUG) print(c(row, column, "black and red"))
-            floating.pie(xpos = column/2 + 2, ypos = 2 * (number.rows - row), 
+            floating.pie(xpos = column/2 + offset.value, ypos = 2 * (number.rows - row), 
                          x = c(1,1), startpos = pi/2, 
                          col = c("black", "red"), radius = 0.37)
         }
         else if(data.in[row, column] > 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "only black"))
-            points(x = column/2 + 2, y = 2 * (number.rows - row), 
+            points(x = column/2 + offset.value, y = 2 * (number.rows - row), 
                    pch = 21, cex = 1.4, bg = "black")
-            
-            # floating.pie(xpos = column - 3, ypos = 2 * (number.rows - row), 
-            #   x = c(1,1), startpos = pi/2, 
-            #   col = c("blue", "white"), radius = 0.35)
         }
         else if(data.in[row, column] == 0 & data.in[row, column + 1] > 0){
             if(DEBUG) print(c(row, column, "only red"))
-            points(x = column/2 + 2, y = 2 * (number.rows - row), 
+            points(x = column/2 + offset.value, y = 2 * (number.rows - row), 
                    pch = 21, cex = 1.4, bg = "red")
-            
-            # floating.pie(xpos = column - 3, ypos = 2 * (number.rows - row), 
-            #   x = c(1,1), startpos = pi/2, 
-            #   col = c("white", "red"), radius = 0.35)
         }
         else if(data.in[row, column] == 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "white"))
             # add empty white circles when no isolates for either
-            points(x = column/2 + 2, y = 2 * (number.rows - row), 
+            points(x = column/2 + offset.value, y = 2 * (number.rows - row), 
                 pch = 1, cex = 1.4, col = "light grey") 
-            
-            # floating.pie(xpos = column - 3, ypos = 2 * (number.rows - row), 
-            #   x = c(1), startpos = pi/2, 
-            #   col = c("white"), radius = 0.25)
         }
     }
 }
@@ -113,7 +104,7 @@ screen(1)
 par(fig = c(0.2,0.85,0.0127,0.919),
     mar = c(0,0,0,0))
 
-plot(tree.phylog, cleaves=0.3, clabel.leaves=0.5, labels.leaves = c(stored.tip.labels, ""))
+plot(tree.phylog, cleaves=0.3, clabel.leaves=0.5, labels.leaves = c(stored.tip.labels))
 
 close.screen(all = TRUE)
 dev.off()
