@@ -54,7 +54,7 @@ text(x = arnold.columns/2 + 2,
 for(row in 1:number.rows){
     
     # print OTU (isolate) row labels
-    #text(x = -2, y = 2 * (number.rows - row), 
+    # text(x = -2, y = 2 * (number.rows - row), 
     #     labels = data.in$Isolate.Rep[row], cex = 0.5, pos=2)
    
     # print out counts of sequences in each OTU (row)
