@@ -7,7 +7,7 @@ library("picante")
 library("ade4")
 
 DEBUG <- FALSE
-setwd("~/Desktop/Jana_phylogeny/")
+setwd("~/Dropbox/Working_files/_Desktop/Kekoanui/KekoanuiDesktop/Jana_phylogeny/")
 data.in <- read.csv("METADATA_forTree_new.csv")
 tree.in <- read.tree("RAxML_bestTree.result.phy")
 my.newick <- write.tree(tree.in)
@@ -15,6 +15,7 @@ tree.phylog <- newick2phylog(my.newick)
 
 # Reorder rows to match tree leaves
 data.in <- data.in[match(names(tree.phylog$leaves), data.in$Isolate.Rep),]
+# data.in <- data.in[match(names(tree.in$leaves), data.in$Isolate.Rep),]
 
 # set up variables for later reuse and to facilitate code readibility
 number.rows <- nrow(data.in)
@@ -23,19 +24,18 @@ arnold.columns = seq(from = 6, to = number.columns, by = 2)
 
 pdf("Plot.pdf", width=15, height=50)
 
-# layout(matrix(c(1,2), 2, 2, byrow = TRUE))
-# par(mai = c(6, 1, 8, 1) + 0.1)
-
 split.screen(c(1,2))
 
 screen(1)
 par(fig = c(0.2,0.85,0.0127,0.919),
     mar = c(0,0,0,0))
-plot(tree.phylog, cleaves=0, clabel.leaves=0.5)
-# par(new=TRUE)
+
+plot(tree.phylog, cleaves=0.5, clabel.leaves=0.5)
+
 screen(2)
 par(fig = c(0,1.1,0.0127,0.919),
     mar = c(0,0,0,0))
+
 # set up empty plot and add column labels to top
 plot(0,0, 
     xlim = c(-5, number.columns - 4), 
@@ -96,8 +96,8 @@ for(row in 1:number.rows){
         else if(data.in[row, column] == 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "white"))
             # add empty white circles when no isolates for either
-            # points(x = column/2 + 2, y = 2 * (number.rows - row), 
-            # pch = 1, cex = 1.4) 
+            points(x = column/2 + 2, y = 2 * (number.rows - row), 
+                pch = 1, cex = 1.4, col = "light grey") 
             
             # floating.pie(xpos = column - 3, ypos = 2 * (number.rows - row), 
             #   x = c(1), startpos = pi/2, 
