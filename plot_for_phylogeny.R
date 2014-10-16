@@ -29,12 +29,12 @@ pdf("Plot.pdf", width=15, height=50)
 split.screen(c(1,2))
 
 screen(1)
-par(fig = c(0.2,0.8,0.0127,0.919),
+par(fig = c(0.2,0.85,0.0127,0.919),
     mar = c(0,0,0,0))
 plot(tree.phylog, cleaves=0, clabel.leaves=0.5)
 # par(new=TRUE)
 screen(2)
-par(fig = c(0.5,1.4,0.0127,0.919),
+par(fig = c(0,1.1,0.0127,0.919),
     mar = c(0,0,0,0))
 # set up empty plot and add column labels to top
 plot(0,0, 
