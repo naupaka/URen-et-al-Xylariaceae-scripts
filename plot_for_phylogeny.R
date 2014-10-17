@@ -39,6 +39,11 @@ plot(0,0,
     xaxt = "n", yaxt = "n", 
     bty = "n", 
     ylab = "", xlab = "")
+
+rect(7 + offset.value - 4,-0.75,12 + offset.value, 2 * (number.rows) + 20, col = "snow2", border = NA)
+rect(12 + offset.value - 4,-0.75,16 + offset.value, 2 * (number.rows) + 20, col = "honeydew2", border = NA)
+rect(16 + offset.value - 4,-0.75,22 + offset.value, 2 * (number.rows) + 20, col = "lemonchiffon", border = NA)
+
 text(x = c(3,4) + (offset.value - 2), y = rep(2 * (number.rows) + 1, 2), 
     labels = names(data.in[,c(5,6)]), srt = 90, adj = 0, cex = 0.5)
 text(x = arnold.columns/2 + offset.value, 
