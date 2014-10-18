@@ -3,20 +3,26 @@
 # Written October 9, 2014 by Naupaka Zimmerman naupaka@gmail.com
 
 library("plotrix")
-library("picante")
-library("ade4")
+library("ape")
+library("phylobase")
 
 DEBUG <- FALSE
 setwd("/Users/naupaka/Dropbox/Working_files/Academia/Administration/Arnold Lab/Misc/Jana_phylogeny/")
 data.in <- read.csv("METADATA_forTree_new.csv")
+row.names(data.in) <- data.in$Isolate.Rep
 tree.in <- read.tree("RAxML_bestTree.result.phy")
-tree.in <- ladderize(tree.in, right = TRUE)
-# my.newick <- write.tree(tree.in)
+tree.in <- ladderize(tree.in, right = FALSE)
+# tree.in$edge[tree.in$edge[,2] < 368,2]
+tip.order <- tree.in$tip.label[tree.in$edge[tree.in$edge[,2] < 368,2]]
+# rev(tip.order)
+# plot(chronos(tree.in))
+# write.tree(tree.in, file = "tree.temp.new")
+# tree.phylo4 <- readNewick("tree.temp.new")
 # tree.phylog <- newick2phylog(my.newick)
-
+# plot(chronos(tree.in, model = "relaxed", lambda = 1.0), main = "relaxed, l=1.0")
 # Reorder rows to match tree leaves
 # data.in <- data.in[match(names(tree.phylog$leaves), data.in$Isolate.Rep),]
-data.in <- data.in[match(tree.in$tip.label, data.in$Isolate.Rep),]
+data.in <- data.in[rev(tip.order),]
 
 # set up variables for later reuse and to facilitate code readibility
 number.rows <- nrow(data.in)
@@ -70,11 +76,11 @@ for(row in 1:number.rows){
         }
     
     # print OTU (isolate) row labels
-#     text(x = 1, y = 2 * (number.rows - row), 
-#         labels = paste(data.in$Isolate.Rep[row], 
-#                        data.in$X95.OTU[row], 
-#                        data.in$X99.OTU[row], sep = " • "), 
-#                 cex = 0.5, pos=2)
+    # text(x = 1, y = 2 * (number.rows - row), 
+    #    labels = paste(data.in$Isolate.Rep[row], 
+    #                   data.in$X95.OTU[row], 
+    #                   data.in$X99.OTU[row], sep = " - "), 
+    #            cex = 0.5, pos=2)
    
     text(x = 3 + (offset.value - 2), y = 2 * (number.rows - row), 
          labels = data.in$Total.Arnold.isolates[row], cex = 0.5)
@@ -112,10 +118,10 @@ for(row in 1:number.rows){
 screen(1)
 par(fig = c(0,0.695,0.004,0.967))
 
-# plot(tree.phylog, cleaves=0.3, clabel.leaves=0.5, labels.leaves = c(stored.tip.labels))
-plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE)
-tiplabels(stored.tip.labels, cex = 0.5, frame = "none", adj = 0)
-
+plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE, cex = 0.5, adj = 2)
+tiplabels(rev(stored.tip.labels), 
+          tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2], 
+          cex = 0.5, frame = "none", adj = 0)
 
 close.screen(all = TRUE)
 dev.off()
