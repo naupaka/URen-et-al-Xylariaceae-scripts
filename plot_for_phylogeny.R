@@ -12,16 +12,7 @@ data.in <- read.csv("METADATA_forTree_new.csv")
 row.names(data.in) <- data.in$Isolate.Rep
 tree.in <- read.tree("RAxML_bestTree.result.phy")
 tree.in <- ladderize(tree.in, right = FALSE)
-# tree.in$edge[tree.in$edge[,2] < 368,2]
-tip.order <- tree.in$tip.label[tree.in$edge[tree.in$edge[,2] < 368,2]]
-# rev(tip.order)
-# plot(chronos(tree.in))
-# write.tree(tree.in, file = "tree.temp.new")
-# tree.phylo4 <- readNewick("tree.temp.new")
-# tree.phylog <- newick2phylog(my.newick)
-# plot(chronos(tree.in, model = "relaxed", lambda = 1.0), main = "relaxed, l=1.0")
-# Reorder rows to match tree leaves
-# data.in <- data.in[match(names(tree.phylog$leaves), data.in$Isolate.Rep),]
+tip.order <- tree.in$tip.label[tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2]]
 data.in <- data.in[rev(tip.order),]
 
 # set up variables for later reuse and to facilitate code readibility
@@ -116,12 +107,14 @@ for(row in 1:number.rows){
 }
 
 screen(1)
-par(fig = c(0,0.695,0.004,0.967))
+par(fig = c(0.2,0.652,0.024,0.951))
 
-plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE, cex = 0.5, adj = 2)
+plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 450)
+
+if(DEBUG) tiplabels()
 tiplabels(rev(stored.tip.labels), 
           tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2], 
-          cex = 0.5, frame = "none", adj = 0)
+          cex = 0.5, frame = "none", adj = -0.05)
 
 close.screen(all = TRUE)
 dev.off()
