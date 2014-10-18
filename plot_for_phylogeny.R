@@ -7,15 +7,16 @@ library("picante")
 library("ade4")
 
 DEBUG <- FALSE
-setwd("~/Dropbox/Working_files/_Desktop/Kekoanui/KekoanuiDesktop/Jana_phylogeny/")
+setwd("/Users/naupaka/Dropbox/Working_files/Academia/Administration/Arnold Lab/Misc/Jana_phylogeny/")
 data.in <- read.csv("METADATA_forTree_new.csv")
 tree.in <- read.tree("RAxML_bestTree.result.phy")
 tree.in <- ladderize(tree.in, right = TRUE)
-my.newick <- write.tree(tree.in)
-tree.phylog <- newick2phylog(my.newick)
+# my.newick <- write.tree(tree.in)
+# tree.phylog <- newick2phylog(my.newick)
 
 # Reorder rows to match tree leaves
-data.in <- data.in[match(names(tree.phylog$leaves), data.in$Isolate.Rep),]
+# data.in <- data.in[match(names(tree.phylog$leaves), data.in$Isolate.Rep),]
+data.in <- data.in[match(tree.in$tip.label, data.in$Isolate.Rep),]
 
 # set up variables for later reuse and to facilitate code readibility
 number.rows <- nrow(data.in)
@@ -40,9 +41,12 @@ plot(0,0,
     bty = "n", 
     ylab = "", xlab = "")
 
-rect(7 + offset.value - 4,-0.75,12 + offset.value, 2 * (number.rows) + 20, col = "snow2", border = NA)
-rect(12 + offset.value - 4,-0.75,16 + offset.value, 2 * (number.rows) + 20, col = "honeydew2", border = NA)
-rect(16 + offset.value - 4,-0.75,22 + offset.value, 2 * (number.rows) + 20, col = "lemonchiffon", border = NA)
+rect(7 + offset.value - 4,-0.75,12 + offset.value, 
+    2 * (number.rows) + 20, col = "snow2", border = NA)
+rect(12 + offset.value - 4,-0.75,16 + offset.value, 
+    2 * (number.rows) + 20, col = "honeydew2", border = NA)
+rect(16 + offset.value - 4,-0.75,22 + offset.value, 
+    2 * (number.rows) + 20, col = "lemonchiffon", border = NA)
 
 text(x = c(3,4) + (offset.value - 2), y = rep(2 * (number.rows) + 1, 2), 
     labels = names(data.in[,c(5,6)]), srt = 90, adj = 0, cex = 0.5)
@@ -106,10 +110,12 @@ for(row in 1:number.rows){
 }
 
 screen(1)
-par(fig = c(0.2,0.85,0.0127,0.919),
-    mar = c(0,0,0,0))
+par(fig = c(0,0.695,0.004,0.967))
 
-plot(tree.phylog, cleaves=0.3, clabel.leaves=0.5, labels.leaves = c(stored.tip.labels))
+# plot(tree.phylog, cleaves=0.3, clabel.leaves=0.5, labels.leaves = c(stored.tip.labels))
+plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE)
+tiplabels(stored.tip.labels, cex = 0.5, frame = "none", adj = 0)
+
 
 close.screen(all = TRUE)
 dev.off()
