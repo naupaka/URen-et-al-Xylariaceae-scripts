@@ -4,16 +4,30 @@
 
 library("plotrix")
 library("ape")
-library("phylobase")
 
 DEBUG <- FALSE
 setwd("/Users/naupaka/Dropbox/Working_files/Academia/Administration/Arnold Lab/Misc/Jana_phylogeny/")
+
+# Load data and set row names (important for later reordering)
 data.in <- read.csv("METADATA_forTree_new.csv")
 row.names(data.in) <- data.in$Isolate.Rep
+
+# Read in the tree as a phylo object
 tree.in <- read.tree("RAxML_bestTree.result.phy")
+
+# Ladderizing figures out new order for nodes but doesn't change the tip 
+# label order internally
 tree.in <- ladderize(tree.in, right = FALSE)
-tip.order <- tree.in$tip.label[tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2]]
-data.in <- data.in[rev(tip.order),]
+
+# This extracts the new edge (tip) order from the tree object
+tip.edge.id.order <- tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2]
+
+# This creates a vector with the tip labels now int he proper order based on 
+# the ladder
+tip.label.order <- tree.in$tip.label[tip.edge.id.order]
+
+# This reorders the data table to match the ladderized order
+data.in <- data.in[rev(tip.label.order),]
 
 # set up variables for later reuse and to facilitate code readibility
 number.rows <- nrow(data.in)
@@ -25,7 +39,10 @@ pdf("Plot.pdf", width=15, height=50)
 
 split.screen(c(1,2))
 
+# Switch to screen 2 to plot the table
 screen(2)
+
+# Size table approporately
 par(fig = c(0,1.1,0.0127,0.919),
     mar = c(0,0,0,0))
 
@@ -38,6 +55,7 @@ plot(0,0,
     bty = "n", 
     ylab = "", xlab = "")
 
+# Add highlight rectangles behind table data types
 rect(7 + offset.value - 4,-0.75,12 + offset.value, 
     2 * (number.rows) + 20, col = "snow2", border = NA)
 rect(12 + offset.value - 4,-0.75,16 + offset.value, 
@@ -45,6 +63,7 @@ rect(12 + offset.value - 4,-0.75,16 + offset.value,
 rect(16 + offset.value - 4,-0.75,22 + offset.value, 
     2 * (number.rows) + 20, col = "lemonchiffon", border = NA)
 
+# Add table column headers
 text(x = c(3,4) + (offset.value - 2), y = rep(2 * (number.rows) + 1, 2), 
     labels = names(data.in[,c(5,6)]), srt = 90, adj = 0, cex = 0.5)
 text(x = arnold.columns/2 + offset.value, 
@@ -52,8 +71,10 @@ text(x = arnold.columns/2 + offset.value,
     length(arnold.columns)), labels = names(data.in[,arnold.columns + 1]), 
     srt = 90, adj = 0, cex = 0.5)
 
+# Initialize tip label vector
 stored.tip.labels <- NA
 
+# Plot the data row by row
 for(row in 1:number.rows){
     
     stored.tip.labels[row] <- 
@@ -83,7 +104,8 @@ for(row in 1:number.rows){
     for(column in arnold.columns){
         if(data.in[row, column] > 0 & data.in[row, column + 1] > 0){
             if(DEBUG) print(c(row, column, "black and red"))
-            floating.pie(xpos = column/2 + offset.value, ypos = 2 * (number.rows - row), 
+            floating.pie(xpos = column/2 + offset.value, 
+                         ypos = 2 * (number.rows - row), 
                          x = c(1,1), startpos = pi/2, 
                          col = c("black", "red"), radius = 0.37)
         }
@@ -106,14 +128,27 @@ for(row in 1:number.rows){
     }
 }
 
+
+# Switch to screen one and plot phylogeny
 screen(1)
+
+# Need to adjust sizing of the phylogeny to match up with the table
 par(fig = c(0.2,0.652,0.024,0.951))
 
-plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 450)
+# Plot the tree. Key parameters are to shut off the margin, which 
+# allows manual setting of the x.lim value. Otherwise the end of the tip 
+# labels get cut off since it isn't allowing enough extra space for long tip
+# names
+plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 550)
 
+# Plots the numbers on the tips for troubleshooting
 if(DEBUG) tiplabels()
+
+# Add on the generated tip labels, in the ladderized order
+# Reversing the order is important, because with phylo.plot
+# the first label is plotted at the bottom, not the top
 tiplabels(rev(stored.tip.labels), 
-          tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2], 
+          tip.edge.id.order, 
           cex = 0.5, frame = "none", adj = -0.05)
 
 close.screen(all = TRUE)
