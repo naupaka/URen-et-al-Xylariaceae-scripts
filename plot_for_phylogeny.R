@@ -102,11 +102,11 @@ for(row in 1:number.rows){
     # or GenBank has isolates, and half-circles if both are present
     for(column in arnold.columns){
         if(data.in[row, column] > 0 & data.in[row, column + 1] > 0){
-            if(DEBUG) print(c(row, column, "black and red"))
+            if(DEBUG) print(c(row, column, "black and grey"))
             floating.pie(xpos = column/2 + offset.value, 
                          ypos = 2 * (number.rows - row), 
                          x = c(1,1), startpos = pi/2, 
-                         col = c("black", "red"), radius = 0.37)
+                         col = c("black", "grey"), radius = 0.37)
         }
         else if(data.in[row, column] > 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "only black"))
@@ -114,9 +114,9 @@ for(row in 1:number.rows){
                    pch = 21, cex = 1.4, bg = "black")
         }
         else if(data.in[row, column] == 0 & data.in[row, column + 1] > 0){
-            if(DEBUG) print(c(row, column, "only red"))
+            if(DEBUG) print(c(row, column, "only grey"))
             points(x = column/2 + offset.value, y = 2 * (number.rows - row), 
-                   pch = 21, cex = 1.4, bg = "red")
+                   pch = 21, cex = 1.4, bg = "grey")
         }
         else if(data.in[row, column] == 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "white"))
