@@ -132,7 +132,7 @@ for(row in 1:number.rows){
 screen(1)
 
 # Need to adjust sizing of the phylogeny to match up with the table
-par(fig = c(0.2,0.652,0.024,0.951))
+par(fig = c(0.3,0.762,0.024,0.951))
 
 # Plot the tree. Key parameters are to shut off the margin, which 
 # allows manual setting of the x.lim value. Otherwise the end of the tip 
