@@ -43,7 +43,7 @@ split.screen(c(1,2))
 screen(2)
 
 # Size table approporately
-par(fig = c(0,1.1,0.0127,0.919),
+par(fig = c(0,1.1,0.0127,0.917),
     mar = c(0,0,0,0))
 
 # set up empty plot and add column labels to top
