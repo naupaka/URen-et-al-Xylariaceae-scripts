@@ -140,6 +140,14 @@ par(fig = c(0.2,0.652,0.024,0.951))
 # names
 plot(tree.in, use.edge.length = TRUE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 1, edge.width = 2)
 
+plotinfo <- get("last_plot.phylo", envir = .PlotPhyloEnv)
+
+i <- 1
+for(ypos in plotinfo$yy[1:367]){
+    lines(c(plotinfo$xx[i],0.6),c(ypos,ypos), col = "grey71")
+    i <- i + 1
+}
+
 # Plots the numbers on the tips for troubleshooting
 if(DEBUG) tiplabels()
 
