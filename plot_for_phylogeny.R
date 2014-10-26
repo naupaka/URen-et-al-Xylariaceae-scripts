@@ -139,7 +139,7 @@ par(fig = c(0.2,0.652,0.024,0.951))
 # allows manual setting of the x.lim value. Otherwise the end of the tip 
 # labels get cut off since it isn't allowing enough extra space for long tip
 # names
-plot(tree.in, use.edge.length = FALSE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 550)
+plot(tree.in, use.edge.length = TRUE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 1)
 
 # Plots the numbers on the tips for troubleshooting
 if(DEBUG) tiplabels()
