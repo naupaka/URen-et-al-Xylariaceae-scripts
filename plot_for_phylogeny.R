@@ -151,12 +151,17 @@ for(ypos in plotinfo$yy[1:367]){
 # Plots the numbers on the tips for troubleshooting
 if(DEBUG) tiplabels()
 
+# body(BOTHlabels)[[8]][[3]][[2]][[3]][[11]] <- substitute(rect(xl, yb, xr, yt, col = bg, border = NULL, lwd = 0))
+
 # Add on the generated tip labels, in the ladderized order
 # Reversing the order is important, because with phylo.plot
 # the first label is plotted at the bottom, not the top
+
+par(fg = "white")
 tiplabels(rev(stored.tip.labels), 
           tip.edge.id.order, 
-          cex = 0.5, frame = "none", adj = -0.05)
+          cex = 0.5, frame = "rect", 
+          bg = "white", adj = -0.05)
 
 close.screen(all = TRUE)
 dev.off()
