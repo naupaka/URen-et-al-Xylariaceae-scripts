@@ -83,8 +83,7 @@ for(row in 1:number.rows){
         }
         else{
             paste(data.in$Isolate.Name[row], 
-                data.in$X95.OTU[row], 
-                data.in$X99.OTU[row], sep = " - ")
+                data.in$X95.OTU[row], sep = " - ")
         }
     
     # print OTU (isolate) row labels
