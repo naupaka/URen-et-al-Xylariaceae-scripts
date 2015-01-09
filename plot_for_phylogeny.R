@@ -13,7 +13,7 @@ data.in <- read.csv("METADATA_forTree_new.csv")
 row.names(data.in) <- data.in$Isolate.Rep
 
 # Read in the tree as a phylo object
-tree.in <- read.tree("RAxML_bestTree.result.phy")
+tree.in <- read.tree("RAxML_bipartitions.result.phy")
 
 # Ladderizing figures out new order for nodes but doesn't change the tip 
 # label order internally
@@ -134,12 +134,18 @@ screen(1)
 # Need to adjust sizing of the phylogeny to match up with the table
 par(fig = c(0.3,0.762,0.024,0.9505))
 
+# create vector for assigning edge thickness based on bootstrap values
+# thickness = 2 is bs >= 70, else thickness = 1
+edge.thickness <- rep(1, length(tree.in$node.label))
+edge.thickness[as.numeric(tree.in$node.label) > 69] <- 2
+# edge.thickness
+
 # Plot the tree. Key parameters are to shut off the margin, which 
 # allows manual setting of the x.lim value. Otherwise the end of the tip 
 # labels get cut off since it isn't allowing enough extra space for long tip
 # names
-plot(tree.in, use.edge.length = TRUE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 1, edge.width = 2)
-
+plot(tree.in, use.edge.length = TRUE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 1, edge.width = edge.thickness)
+nodelabels(frame="none")
 plotinfo <- get("last_plot.phylo", envir = .PlotPhyloEnv)
 
 i <- 1
