@@ -4,6 +4,7 @@
 
 library("plotrix")
 library("ape")
+library("phyloch")
 
 DEBUG <- FALSE
 setwd("/Users/naupaka/Dropbox/Working_files/Academia/Administration/Arnold Lab/Misc/Jana_phylogeny/")
@@ -22,7 +23,7 @@ tree.in <- ladderize(tree.in, right = FALSE)
 # This extracts the new edge (tip) order from the tree object
 tip.edge.id.order <- tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2]
 
-# This creates a vector with the tip labels now int he proper order based on 
+# This creates a vector with the tip labels now in the proper order based on 
 # the ladder
 tip.label.order <- tree.in$tip.label[tip.edge.id.order]
 
@@ -134,18 +135,13 @@ screen(1)
 # Need to adjust sizing of the phylogeny to match up with the table
 par(fig = c(0.3,0.762,0.024,0.9505))
 
-# create vector for assigning edge thickness based on bootstrap values
-# thickness = 2 is bs >= 70, else thickness = 1
-edge.thickness <- rep(1, length(tree.in$node.label))
-edge.thickness[as.numeric(tree.in$node.label) > 69] <- 2
-# edge.thickness
-
 # Plot the tree. Key parameters are to shut off the margin, which 
 # allows manual setting of the x.lim value. Otherwise the end of the tip 
 # labels get cut off since it isn't allowing enough extra space for long tip
 # names
-plot(tree.in, use.edge.length = TRUE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 1, edge.width = edge.thickness)
-nodelabels(frame="none")
+plot(tree.in, use.edge.length = TRUE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 1) #, edge.width = edge.thickness)
+node.support(x = tree.in$node.label, mode="edges", cutoff=70, cex=3)
+
 plotinfo <- get("last_plot.phylo", envir = .PlotPhyloEnv)
 
 i <- 1
