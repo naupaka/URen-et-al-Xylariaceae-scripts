@@ -4,6 +4,10 @@
 
 library("plotrix")
 library("ape")
+
+# this library is not on CRAN and needs to be installed manually
+# it was downloaded on January 9, 2015 from here:
+# http://www.christophheibl.de/Rpackages.html
 library("phyloch")
 
 DEBUG <- FALSE
@@ -140,8 +144,12 @@ par(fig = c(0.3,0.762,0.024,0.9505))
 # labels get cut off since it isn't allowing enough extra space for long tip
 # names
 plot(tree.in, use.edge.length = TRUE, show.tip.label = FALSE, no.margin = TRUE, x.lim = 1) #, edge.width = edge.thickness)
+
+# this is the function we need to load the "phyloch" library to use 
 node.support(x = tree.in$node.label, mode="edges", cutoff=70, cex=3)
 
+# Get out the detailed info on the plot in order to figure out where to plot 
+# lines connecting tips and the data table
 plotinfo <- get("last_plot.phylo", envir = .PlotPhyloEnv)
 
 i <- 1
