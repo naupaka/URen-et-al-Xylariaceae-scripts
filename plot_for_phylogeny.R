@@ -22,7 +22,7 @@ tree.in <- read.tree("RAxML_bipartitions.result.phy")
 
 # Ladderizing figures out new order for nodes but doesn't change the tip 
 # label order internally
-tree.in <- ladderize(tree.in, right = FALSE)
+tree.in <- ladderize(tree.in, right = TRUE)
 
 # This extracts the new edge (tip) order from the tree object
 tip.edge.id.order <- tree.in$edge[tree.in$edge[,2] < length(tree.in$tip.label) + 1,2]
