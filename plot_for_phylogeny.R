@@ -64,10 +64,10 @@ bottom.rect <- -0.75
 top.rect <- 2 * (number.rows) + 20
 left.1.rect <- 3 + offset.value
 right.1.rect <- 12 + offset.value
-left.2.rect <- 8 + offset.value
+left.2.rect <- 37/3
 right.2.rect <- 16 + offset.value
-left.3.rect <- 12 + offset.value
-right.3.rect <- 22 + offset.value
+left.3.rect <- 15
+right.3.rect <- 9 + 38/3
 
 # Add highlight rectangles behind table data types
 rect(left.1.rect, bottom.rect,
