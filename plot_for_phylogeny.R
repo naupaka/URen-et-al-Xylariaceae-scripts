@@ -61,12 +61,15 @@ plot(0,0,
     ylab = "", xlab = "")
 
 # Add highlight rectangles behind table data types
-rect(7 + offset.value - 4,-0.75,12 + offset.value, 
-    2 * (number.rows) + 20, col = "snow2", border = NA)
-rect(12 + offset.value - 4,-0.75,16 + offset.value, 
-    2 * (number.rows) + 20, col = "honeydew2", border = NA)
-rect(16 + offset.value - 4,-0.75,22 + offset.value, 
-    2 * (number.rows) + 20, col = "lemonchiffon", border = NA)
+rect(7 + offset.value - 4, -0.75,
+     12 + offset.value, 2 * (number.rows) + 20, 
+     col = "snow2", border = NA)
+rect(12 + offset.value - 4, -0.75, 
+     16 + offset.value, 2 * (number.rows) + 20, 
+     col = "honeydew2", border = NA)
+rect(16 + offset.value - 4, -0.75, 
+     22 + offset.value, 2 * (number.rows) + 20, 
+     col = "lemonchiffon", border = NA)
 
 # Add table column headers
 text(x = c(3,4) + (offset.value - 2), y = rep(2 * (number.rows) + 1, 2), 
