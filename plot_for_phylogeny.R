@@ -83,13 +83,15 @@ rect(left.3.rect, bottom.rect,
 # Add table column headers
 text(x = c(3,4) + (offset.value - 2), y = rep(2 * (number.rows) + 1, 2), 
     labels = names(data.in[,c(5,6)]), srt = 90, adj = 0, cex = 0.5)
-text(x = arnold.columns/2 + offset.value, 
+text(x = seq(9+1/3, 9+1/3+18*2/3,by = 2/3), 
     y = rep(2 * (number.rows) + 1, 
     length(arnold.columns)), labels = names(data.in[,arnold.columns + 1]), 
     srt = 90, adj = 0, cex = 0.5)
 
 # Initialize tip label vector
 stored.tip.labels <- NA
+
+adjusted.x <- seq(9+1/3, 9+1/3+18*2/3,by = 2/3)
 
 # Plot the data row by row
 for(row in 1:number.rows){
@@ -117,29 +119,34 @@ for(row in 1:number.rows){
 
     # plot either fully filled circles if only Arnold collection
     # or GenBank has isolates, and half-circles if both are present
+    
+    
     for(column in arnold.columns){
         if(data.in[row, column] > 0 & data.in[row, column + 1] > 0){
             if(DEBUG) print(c(row, column, "black and grey"))
-            floating.pie(xpos = column/2 + offset.value, 
+            floating.pie(xpos = adjusted.x[which(arnold.columns == column)], 
                          ypos = 2 * (number.rows - row), 
                          x = c(1,1), startpos = pi/2, 
-                         col = c("black", "grey"), radius = 0.37)
+                         col = c("black", "grey"), radius = 0.25)
         }
         else if(data.in[row, column] > 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "only black"))
-            points(x = column/2 + offset.value, y = 2 * (number.rows - row), 
-                   pch = 21, cex = 1.4, bg = "black")
+            points(x = adjusted.x[which(arnold.columns == column)], 
+                   y = 2 * (number.rows - row), 
+                   pch = 21, cex = 1, bg = "black")
         }
         else if(data.in[row, column] == 0 & data.in[row, column + 1] > 0){
             if(DEBUG) print(c(row, column, "only grey"))
-            points(x = column/2 + offset.value, y = 2 * (number.rows - row), 
-                   pch = 21, cex = 1.4, bg = "grey")
+            points(x = adjusted.x[which(arnold.columns == column)], 
+                   y = 2 * (number.rows - row), 
+                   pch = 21, cex = 1, bg = "grey")
         }
         else if(data.in[row, column] == 0 & data.in[row, column + 1] == 0){
             if(DEBUG) print(c(row, column, "white"))
             # add empty white circles when no isolates for either
-            points(x = column/2 + offset.value, y = 2 * (number.rows - row), 
-                pch = 1, cex = 1.4, col = "light grey") 
+            points(x = adjusted.x[which(arnold.columns == column)], 
+                   y = 2 * (number.rows - row), 
+                pch = 1, cex = 1, col = "light grey") 
         }
     }
 }
