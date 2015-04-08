@@ -60,15 +60,24 @@ plot(0,0,
     bty = "n", 
     ylab = "", xlab = "")
 
+bottom.rect <- -0.75
+top.rect <- 2 * (number.rows) + 20
+left.1.rect <- 3 + offset.value
+right.1.rect <- 12 + offset.value
+left.2.rect <- 8 + offset.value
+right.2.rect <- 16 + offset.value
+left.3.rect <- 12 + offset.value
+right.3.rect <- 22 + offset.value
+
 # Add highlight rectangles behind table data types
-rect(7 + offset.value - 4, -0.75,
-     12 + offset.value, 2 * (number.rows) + 20, 
+rect(left.1.rect, bottom.rect,
+     right.1.rect, top.rect, 
      col = "snow2", border = NA)
-rect(12 + offset.value - 4, -0.75, 
-     16 + offset.value, 2 * (number.rows) + 20, 
+rect(left.2.rect, bottom.rect, 
+     right.2.rect, top.rect, 
      col = "honeydew2", border = NA)
-rect(16 + offset.value - 4, -0.75, 
-     22 + offset.value, 2 * (number.rows) + 20, 
+rect(left.3.rect, bottom.rect, 
+     right.3.rect, top.rect, 
      col = "lemonchiffon", border = NA)
 
 # Add table column headers
