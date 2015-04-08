@@ -63,9 +63,9 @@ plot(0,0,
 bottom.rect <- -0.75
 top.rect <- 2 * (number.rows) + 20
 left.1.rect <- 3 + offset.value
-right.1.rect <- 12 + offset.value
+right.1.rect <- 9 + offset.value
 left.2.rect <- 37/3
-right.2.rect <- 16 + offset.value
+right.2.rect <- 10 + offset.value
 left.3.rect <- 15
 right.3.rect <- 9 + 38/3
 
