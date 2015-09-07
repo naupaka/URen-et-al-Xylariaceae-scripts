@@ -1,0 +1,23 @@
+KF466898
+ REF TITLE: Isolation of Endophytes Isolated from Rainforest Plants
+ Features:
+	collected_by	Connie M. Lu
+	collection_date	16-Mar-2013
+	country	Ecuador
+	db_xref	taxon:1420289
+	host	Costus laevis Ruiz & Par.
+	isolate	E13415D
+	lat_lon	0.6736 S 76.4010 W
+	mol_type	genomic DNA
+	organism	fungal sp. E13415D
+KF467134
+ REF TITLE: Isolation of Endophytes Isolated from Rainforest Plants
+ Features:
+	collected_by	Margaretta Midura
+	collection_date	17-Mar-2013
+	country	Ecuador
+	db_xref	taxon:1420535
+	host	Spondias mombin
+	isolate	E13621G
+	mol_type	genomic DNA
+	organism	fungal sp. E13621G
