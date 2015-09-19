@@ -11,7 +11,6 @@ library("ape")
 library("phyloch")
 
 DEBUG <- FALSE
-setwd("/Users/naupaka/Dropbox/Working_files/Academia/Administration/Arnold Lab/Misc/Jana_phylogeny/")
 
 # Load data and set row names (important for later reordering)
 data.in <- read.csv("METADATA_forTree_new.csv")
