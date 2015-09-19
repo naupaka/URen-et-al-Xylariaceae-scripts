@@ -1,9 +1,9 @@
-# Scripts and data for a manuscript entitled:
-# "Contribution of North American endophytic and endolichenic fungi to the phylogeny, ecology, and taxonomy of Xylariaceae (Sordariomycetes, Ascomycota)"
+## Scripts and data for a manuscript entitled:
+## "Contribution of North American endophytic and endolichenic fungi to the phylogeny, ecology, and taxonomy of Xylariaceae (Sordariomycetes, Ascomycota)"
 
-## Authors: Jana M. U'Ren, Jolanta Miadlikowska, Naupaka Zimmerman, Francois Lutzoni, A. Elizabeth Arnold
+### Authors: Jana M. U'Ren, Jolanta Miadlikowska, Naupaka Zimmerman, Francois Lutzoni, A. Elizabeth Arnold
 
-### September 18, 2015
+#### September 18, 2015
 
 
 ## 01-blast-sequences
