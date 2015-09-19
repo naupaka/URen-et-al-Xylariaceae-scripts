@@ -3,9 +3,6 @@
 ## Naupaka Zimmerman naupaka@gmail.com
 ## October 26, 2014
 
-# setwd("/Users/janau/Desktop/Xylariaceae_NEW/")
-setwd("/Users/naupaka/Dropbox/Working_files/Academia/Administration/Arnold Lab/Misc/Jana_phylogenetic_diversity")
-
 library("caper")
 library("ggplot2")
 
