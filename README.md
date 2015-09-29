@@ -23,7 +23,7 @@ The script `get_isolate_info.pl` (written by Jason Stajich) was used to obtain a
 
 ## 03-parse-metadata
 
-The script `parse_metadata.py` (written by Naupaka Zimmerman) parses GenBank formatted text files containing metadata into cvs format.  
+The script `parse_metadata.py` (written by Naupaka Zimmerman) parses GenBank formatted text files containing metadata into `csv` format.  
 Example **input file** is `Blast_accession98pct.meta2.txt` (contains the TITLE information).
 
 **Output files** (e.g., `out.csv`) were opened in Excel and for each GI, the available metadata were searched to find the geographic origin, host lineage (e.g., Angiosperm), and substrate information (e.g., surface sterilized leaf).  
