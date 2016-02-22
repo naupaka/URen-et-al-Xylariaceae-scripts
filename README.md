@@ -3,7 +3,11 @@
 
 ### Authors: Jana M. U'Ren, Jolanta Miadlikowska, Naupaka B. Zimmerman, Francois Lutzoni, Jason E. Stajich, A. Elizabeth Arnold
 
-#### September 18, 2015
+#### Published manuscript doi: 10.1016/j.ympev.2016.02.010
+
+#### Feb. 22, 2016
+
+#### Note: The scripts and files contained in this repository represent the most recent versions used for the manuscript; however, a number of additional changes were manuually made to the output files (e.g., metadata annotations on phylogenetic tree pdf) prior to publication. Please contact the corresponding author (J.M. U'Ren) for further clarification or additional information. 
 
 
 ## 01-blast-sequences
@@ -30,7 +34,7 @@ Example **input file** is `Blast_accession98pct.meta2.txt` (contains the TITLE i
 
 Information was then summarized in Excel (see Supplemental Tables 7-8) under columns "Geographic region", "Host type", and "Substrate".  
 
-* Categories for "Geographic region" included (1) U.S./Canada; (2) Mexico/South and Central America/Caribbean; (3) Europe/Russia; (4) Asia; and (5) “other” (e.g., Hawaii, Australia, New Zealand, Papua New Guinea, Africa, the Middle East, and Antarctica, grouped as “other” due to a paucity of metadata from those sites). Isolates from the Hawaiian Islands were included in “other” rather than U.S./Canada due to their geographical isolation from the continental U.S. 
+* Categories for "Geographic region" included (1) U.S./Canada; (2) Mexico/South and Central America/Caribbean; (3) Europe/ western Russia; (4) Asia, eastern Russia; and (5) “other” (e.g., Hawaii, Australia, New Zealand, Papua New Guinea, Africa, the Middle East, and Antarctica, grouped as “other” due to a paucity of metadata from those sites). Isolates from the Hawaiian Islands were included in “other” rather than U.S./Canada due to their geographical isolation from the continental U.S. 
 
 * Categories for host breadth included (1) angiosperm; (2) “gymnosperm” (i.e., Pinophyta and Ginkgo biloba); (3) spore-bearing vascular plant (i.e., lycophytes and ferns); (4) bryophyte (i.e., mosses and liverworts) and (5) lichen. 
 
@@ -40,14 +44,14 @@ In the cases of missing metadata, information was gathered (when possible) from 
 
 For each terminal taxon in the tree, the final number of isolates found under each category were saved in a csv file (e.g., `METADATA_forTree.csv`).  In this file the first column contains the terminal taxon name as it is in the tree file (i.e., isolate rep), the second column is the taxon name as it should appear in the figure.  Columns with Arnold are totals for isolates collected in surveys of 5 North American sites.  All other columns are for previously published taxa.  
 
-`METADATA_forTree.csv` does not contain sporocarp information gleaned from the literature or online resources.  
+`METADATA_forTree.csv` does not contain sporocarp information gleaned from the literature or online resources.  Some errors were discovered in proofs and fixed in Illustrator prior to publication. Please refer to Figure 2 in the manuscript for the most up-to-date metadata information. 
 
 
 ## 04-make-phylogeny
 
 The script `plot_for_phylogeny.R` (written by Naupaka Zimmerman) was takes two **input** files: one including the **metadata in csv format** (e.g., `METADATA_forTree.csv`) to plot the metadata alongside on a **tree file** with support values in phylip format (e.g., `RAxML_bipartitions.result.phy`).
 
-The **output** is a pdf file.  For the purposes of this manuscript, the output PDF was opened in Adobe Illustrator CC 2014 and manually edited for publication. Mistakes were corrected manually. Information based on sporocarps was added to the figure manually in Illustrator.
+The **output** is a pdf file.  For the purposes of this manuscript, the output PDF was opened in Adobe Illustrator CC 2014 and manually edited for publication. Mistakes were corrected manually. Information based on sporocarps was added to the figure manually in Illustrator. Please refer to Figure 2 in the manuscript for the most up-to-date metadata information. 
 
 
 ## 05-phylo-diversity
